@@ -1,0 +1,25 @@
+[package]
+name = "kagemusha-cli"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+homepage.workspace = true
+repository.workspace = true
+description = "CLI for Tor network privacy analysis"
+
+[[bin]]
+name = "kagemusha"
+path = "src/main.rs"
+
+[lints]
+workspace = true
+
+[dependencies]
+kagemusha-core = { path = "../kagemusha-core" }
+kagemusha-analyzer = { path = "../kagemusha-analyzer" }
+clap = { version = "4", features = ["derive"] }
+shikumi = "0.1"
+tokio = { version = "1", features = ["full"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
