@@ -12,6 +12,7 @@ description = "Tor network analysis — Onionoo client, exit detection, consensu
 workspace = true
 
 [features]
+persistence = ["dep:sea-orm"]
 tor = ["dep:kakuremino"]
 
 [dependencies]
@@ -21,8 +22,13 @@ async-trait = "0.1"
 chrono = { version = "0.4", features = ["serde"] }
 ipnet = "2"
 reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json"] }
+sea-orm = { version = "1", features = ["sqlx-sqlite", "runtime-tokio-rustls"], optional = true }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 thiserror = "2"
 tokio = { version = "1", features = ["full"] }
 tracing = "0.1"
+
+[dev-dependencies]
+sea-orm = { version = "1", features = ["sqlx-sqlite", "runtime-tokio-rustls"] }
+tokio = { version = "1", features = ["full", "test-util"] }
