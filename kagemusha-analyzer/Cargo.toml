@@ -11,8 +11,12 @@ description = "Tor network analysis — Onionoo client, exit detection, consensu
 [lints]
 workspace = true
 
+[features]
+tor = ["dep:kakuremino"]
+
 [dependencies]
 kagemusha-core = { path = "../kagemusha-core" }
+kakuremino = { git = "https://github.com/pleme-io/kakuremino", default-features = false, features = ["tor"], optional = true }
 async-trait = "0.1"
 chrono = { version = "0.4", features = ["serde"] }
 ipnet = "2"
