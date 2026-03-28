@@ -42,6 +42,25 @@ enum Command {
 }
 
 // ---------------------------------------------------------------------------
+// Execute
+// ---------------------------------------------------------------------------
+
+/// Execute the CLI with the given arguments.
+///
+/// Extracted for testability — `main` delegates here after initializing tracing.
+async fn execute(cli: Cli) -> Result<(), Box<dyn std::error::Error>> {
+    match cli.command {
+        Command::Relays { query } => cmd_relays(query).await?,
+        Command::Exits => cmd_exits().await?,
+        Command::Circuits => cmd_circuits().await?,
+        Command::Audit => cmd_audit().await?,
+        Command::Status => cmd_status().await?,
+    }
+
+    Ok(())
+}
+
+// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 
@@ -55,16 +74,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .init();
 
     let cli = Cli::parse();
-
-    match cli.command {
-        Command::Relays { query } => cmd_relays(query).await?,
-        Command::Exits => cmd_exits().await?,
-        Command::Circuits => cmd_circuits().await?,
-        Command::Audit => cmd_audit().await?,
-        Command::Status => cmd_status().await?,
-    }
-
-    Ok(())
+    execute(cli).await
 }
 
 // ---------------------------------------------------------------------------

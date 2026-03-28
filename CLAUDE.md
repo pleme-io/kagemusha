@@ -2,13 +2,24 @@
 
 Pure Rust workspace for Tor network analysis, relay monitoring, exit detection, and privacy auditing.
 
+**Tests:** 42
+
 ## Architecture
 
 ```
 kagemusha-core       — traits + types (ConsensusProvider, ExitDetector, RelayMonitor, PrivacyAuditor)
 kagemusha-analyzer   — implementations (Onionoo client, exit list parser, consensus builder, audit engine)
-kagemusha-cli        — CLI binary (clap subcommands: relays, exits, circuits, audit, status)
+kagemusha-cli        — CLI binary (clap subcommands: relays, exits, circuits, audit, status), execute() extracted for testability
 ```
+
+### Key Types
+
+| Type | Kind | Description |
+|------|------|-------------|
+| `RelayDetail` | Struct | Onionoo-style relay details (fingerprint, nickname, flags, bandwidth, country, etc.) |
+| `BandwidthHistory` | Struct | Normalized bandwidth values over time (read/write history) |
+| `AnalysisScope` | Enum | 6 variants (AllRelays, ExitNodes, GuardNodes, BridgeNodes, Country, Fingerprint) |
+| `Error` | Struct | Clone + PartialEq + is_retryable() |
 
 ## Onionoo Integration
 
